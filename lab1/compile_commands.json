@@ -2,49 +2,65 @@
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/home/linuxwojtek/studia/nanosystems/lab1",
+      "-I/home/linuxwojtek/studia/nanosystems/labs/lab1",
       "-isystem",
       "/usr/include/eigen3",
       "-std=gnu++17",
       "-c",
       "-o",
       "CMakeFiles/QuantumDotSpectr.dir/main.cpp.o",
-      "/home/linuxwojtek/studia/nanosystems/lab1/main.cpp"
+      "/home/linuxwojtek/studia/nanosystems/labs/lab1/main.cpp"
     ],
-    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build",
-    "file": "/home/linuxwojtek/studia/nanosystems/lab1/main.cpp",
-    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build/CMakeFiles/QuantumDotSpectr.dir/main.cpp.o"
+    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build",
+    "file": "/home/linuxwojtek/studia/nanosystems/labs/lab1/main.cpp",
+    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build/CMakeFiles/QuantumDotSpectr.dir/main.cpp.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/home/linuxwojtek/studia/nanosystems/lab1",
+      "-I/home/linuxwojtek/studia/nanosystems/labs/lab1",
       "-isystem",
       "/usr/include/eigen3",
       "-std=gnu++17",
       "-c",
       "-o",
       "CMakeFiles/QuantumDotSpectr.dir/utils/src/solver.cpp.o",
-      "/home/linuxwojtek/studia/nanosystems/lab1/utils/src/solver.cpp"
+      "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/solver.cpp"
     ],
-    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build",
-    "file": "/home/linuxwojtek/studia/nanosystems/lab1/utils/src/solver.cpp",
-    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build/CMakeFiles/QuantumDotSpectr.dir/utils/src/solver.cpp.o"
+    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build",
+    "file": "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/solver.cpp",
+    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build/CMakeFiles/QuantumDotSpectr.dir/utils/src/solver.cpp.o"
   },
   {
     "arguments": [
       "/usr/bin/c++",
-      "-I/home/linuxwojtek/studia/nanosystems/lab1",
+      "-I/home/linuxwojtek/studia/nanosystems/labs/lab1",
       "-isystem",
       "/usr/include/eigen3",
       "-std=gnu++17",
       "-c",
       "-o",
       "CMakeFiles/QuantumDotSpectr.dir/utils/src/basis_funcs.cpp.o",
-      "/home/linuxwojtek/studia/nanosystems/lab1/utils/src/basis_funcs.cpp"
+      "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/basis_funcs.cpp"
     ],
-    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build",
-    "file": "/home/linuxwojtek/studia/nanosystems/lab1/utils/src/basis_funcs.cpp",
-    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/lab1/build/CMakeFiles/QuantumDotSpectr.dir/utils/src/basis_funcs.cpp.o"
+    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build",
+    "file": "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/basis_funcs.cpp",
+    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build/CMakeFiles/QuantumDotSpectr.dir/utils/src/basis_funcs.cpp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/linuxwojtek/studia/nanosystems/labs/lab1",
+      "-isystem",
+      "/usr/include/eigen3",
+      "-std=gnu++17",
+      "-c",
+      "-o",
+      "CMakeFiles/QuantumDotSpectr.dir/utils/src/params.cpp.o",
+      "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/params.cpp"
+    ],
+    "directory": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build",
+    "file": "/home/linuxwojtek/studia/nanosystems/labs/lab1/utils/src/params.cpp",
+    "output": "/home/linuxwojtek/Desktop/Studia/10_semestr/nanosystems/labs/lab1/build/CMakeFiles/QuantumDotSpectr.dir/utils/src/params.cpp.o"
   }
 ]

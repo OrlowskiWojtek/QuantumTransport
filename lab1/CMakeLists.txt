@@ -8,7 +8,8 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 add_executable(QuantumDotSpectr main.cpp utils/src/solver.cpp 
                utils/src/basis_funcs.cpp
-               utils/src/params.cpp)
+               utils/src/params.cpp
+               utils/src/task_manager.cpp)
 target_link_libraries (QuantumDotSpectr Eigen3::Eigen)
 
 target_include_directories(QuantumDotSpectr PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
