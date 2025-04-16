@@ -12,6 +12,7 @@ public:
     void task_2();
     void task_3();
     void task_4();
+    void task_5();
 
 private:
     QDParams* p;

@@ -20,6 +20,9 @@ public:
         return instance;
     }
 
+    void set_omega_x(double omx_meV);
+    void set_omega_y(double omy_meV);
+
     double hartree_to_meV = 27211.6;
     double bohr_radius = 0.0529;
 

@@ -19,7 +19,6 @@ function load_matrices_from_file(filepath::String, N::Int)
                 append!(current_block, row_values)
             end
         end
-        # obsługa ostatniego bloku (jeśli nie zakończony pustą linią)
         if length(current_block) == N * N
             push!(matrices, reshape(copy(current_block), N, N))
         elseif !isempty(current_block)
@@ -30,8 +29,8 @@ function load_matrices_from_file(filepath::String, N::Int)
     return matrices
 end
 
-wfs = load_matrices_from_file("../data/wavefunctions_test", 101)
-energies = readdlm("../data/eigenvalues_test")
+wfs = load_matrices_from_file("../data/wavefunctions_task_5", 101)
+energies = readdlm("../data/eigenvalues_task_5")
 
 ##
 
@@ -44,5 +43,6 @@ with_theme(theme_latexfonts()) do
         newaxes[idx].title = "Stan $(idx-1), energia: $(energies[idx])"
     end
 
+    save("plots/wavefunctions_high_omegay.pdf", fig)
     display(fig)
 end

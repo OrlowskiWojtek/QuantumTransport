@@ -24,6 +24,6 @@ heatmap!(ax2, data2, interpolate = false);
 Colorbar(fig[3,1:3], cm, vertical = false)
 
 resize_to_layout!(fig)
-save("basis_funcs.pdf", fig)
+save("plots/basis_funcs.pdf", fig)
 display(fig)
 
