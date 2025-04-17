@@ -1,6 +1,5 @@
 using CairoMakie
 using DelimitedFiles
-using ColorSchemes: colorschemes
 
 ## loading data
 
@@ -19,10 +18,10 @@ with_theme(
 ) do
 
         fig = Figure();
-        ax  = Axis(fig[1,1], xlabel = "ħωₓ [meV]", ylabel = "Energia stanu [meV]") 
+        ax  = Axis(fig[1,1], xlabel = "ħωₓ [meV]", ylabel = "State energy [meV]") 
         cm = cgrad(:managua10, 10)
         for (idx,ene) in enumerate(eachrow(energies))
-            lines!(ax, hxs, ene, label = "Stan $idx", linewidth = 3, color = cm[idx])
+            lines!(ax, hxs, ene, label = "State $idx", linewidth = 3, color = cm[idx])
         end
 
         Legend(fig[1,2], ax)

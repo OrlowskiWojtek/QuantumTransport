@@ -29,20 +29,23 @@ function load_matrices_from_file(filepath::String, N::Int)
     return matrices
 end
 
-wfs = load_matrices_from_file("../data/wavefunctions_task_5", 101)
-energies = readdlm("../data/eigenvalues_task_5")
+wfs = load_matrices_from_file("../data/wavefunctions_task_3", 101)
+energies = readdlm("../data/eigenvalues_task_3")
 
 ##
 
+x = collect(LinRange(-75.6144*0.059, 75.6144*0.059, 101))
 with_theme(theme_latexfonts()) do
     fig = Figure();
     newaxes = [Axis(fig[(i-1) % 3, Int(floor((i - 1) / 3))]) for i in 1:6]
 
     for (idx, wf) in enumerate(wfs)
-        heatmap!(newaxes[idx], wf, colormap = :thermal)
-        newaxes[idx].title = "Stan $(idx-1), energia: $(energies[idx])"
+        heatmap!(newaxes[idx], x, x, wf, colormap = :thermal)
+        newaxes[idx].title = "State $(idx-1), energy: $(energies[idx])"
     end
+    Label(fig[0:2,-1], "x [nm]", rotation = π/2)
+    Label(fig[3,0:1], "y [nm]")
 
-    save("plots/wavefunctions_high_omegay.pdf", fig)
+    save("plots/wavefunctions.pdf", fig)
     display(fig)
 end
