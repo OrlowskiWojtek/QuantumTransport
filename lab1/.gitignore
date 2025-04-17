@@ -2,6 +2,6 @@ plots/
 *.aux
 *.fdb_latexmk
 *.fls
-.log
-.out
-.gz
+*.log
+*.out
+*.gz
