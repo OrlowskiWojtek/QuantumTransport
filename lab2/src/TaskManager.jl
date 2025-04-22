@@ -5,6 +5,7 @@ using ProgressMeter
 struct TaskManager
     task1::Function
     task2::Function
+    task3::Function
 end
 
 function task1( disp = false)
@@ -115,7 +116,22 @@ function task2(disp)
     save("../plots/iv_characteristic.pdf", f)
 end
 
+include("utils/QuantumPointContact.jl")
+
+function task3(disp)
+    qpc = initQPC()
+
+    f = plotQPCPotential(qpc, false)
+    save("../plots/qpc_potential_map.pdf", f)
+
+    energies = calculateEffectivePotential(5, qpc)
+    plotQPCEnergies(energies, qpc, false)
+
+    ene, cond = calcConductance(qpc)
+    plotConductances(ene, cond, true)
+end
+
 function getTaskManager()
 
-    return TaskManager(task1, task2)
+    return TaskManager(task1, task2, task3)
 end
