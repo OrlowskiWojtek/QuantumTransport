@@ -2,6 +2,6 @@ include("TaskManager.jl")
 
 tm = getTaskManager();
 
-#tm.task1(false);
-#tm.task2(false);
-tm.task3(false);
+#tm.task1(true);
+#tm.task2(true);
+tm.task3(true);

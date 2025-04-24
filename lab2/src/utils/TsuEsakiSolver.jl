@@ -10,7 +10,7 @@ end
 
 function solve(ts::TsuEsaki)
     constants = getConstants()
-    energies = collect(LinRange(1e-6, ts.mu_s, 1000))
+    energies = collect(LinRange(1e-6, 2*ts.mu_s, 1000))
     
     integral = 0.
     for (idx, ene) in enumerate(energies)

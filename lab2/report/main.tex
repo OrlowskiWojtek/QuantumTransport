@@ -1,0 +1,153 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{~/Desktop/Studia/LaTeX/setup_eng.tex}
+\author{Wojciech Orłowski}
+\title{Calculation of current-voltage characteristic of a resonant-tunneling \\
+diode (RTD) and using the adiabatic approximation for simulation \\
+of conductance quantization in quantum point contact (QPC)}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+
+Main goal of this laboratory is to implement transfer matrix method in many systems.
+Firstly transmittance and reflectance through simple single barrier were calculated.
+Then system was expanded by second barrier.
+
+Our calculations were then used to calculate conductance using Tsu-Esaki formula.
+Finally using adiabatic approximation we can calculate conductance throught quantum point contact.
+
+All laboratory was written in \julia $\;$and source code is published at \href{https://github.com/OrlowskiWojtek/QuantumTransport/tree/2bb1eba9f6fcc11de530fe850330eb98d213b3ef/lab2}{GitHub} repository.
+
+\newpage
+
+\section*{Task 1}
+
+In first task transmittance and reflectance throught simple potential barrier was calculated.
+The barrier consists of Al0.3Ga0.7As and its height is equal to 0.27 eV.
+Effective mass of electron inside GaAs is equal to 0.067, but inside barrier 0.0879.
+We can compare transmittance and reflectance with assuming constant effective mass and effective mass depending on material (fig. \ref{fig:single_barier}).
+
+\begin{figure}[h]
+    \begin{subfigure}{0.49\textwidth}
+        \begin{center}
+            \includegraphics[width=0.95\textwidth]{../plots/single_barrier.pdf}
+        \end{center}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \begin{center}
+            \includegraphics[width=0.95\textwidth]{../plots/single_barrier_const_mass.pdf}
+        \end{center}
+        \caption{}
+    \end{subfigure}
+
+    \caption{Transmittance and reflectance of electron passing through the barrier with (a) effective mass dependent on material (b) constant effective mass.}
+    \label{fig:single_barier}
+\end{figure}
+
+Changing effective mass of electron depending on material changes values of transmittance and reflectance.
+Firstly we can see that first maximum of transmittance is slightly moved.
+Electron needs less energy to pass through barrier with nearly 100\% transmittance for case in changing electron mass.
+But then in both cases we see loss of transmittance which comes from electron oscillations inside barrier.
+This loss is bigger in changing mass case.
+
+\newpage
+
+\section*{Task 2}
+
+In second task we performed calculations for double barrier.
+Transmittance and reflectance were calculated (fig. \ref{fig:double_barrier}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{../plots/double_barrier.pdf}
+    \end{center}
+    \caption{Transmittance and reflectance through double potential barrier.}
+    \label{fig:double_barrier}
+\end{figure}
+
+A very characteristic point shows up at electron energy lower than barrier energy.
+Point with transmittance equal to 1.
+It is known effect of double barrier - inside potential well (between barriers) a gap is created inside which electron resonance occurs resulting high transmittance in narrow band.
+
+In second part of this task Tsu-Esaki formula has been used to calculate current-voltage characteristics.
+Before that one update to potential of device was introduced - by applying bias voltage potential is lineary decrasing (fig. \ref{fig:bias_voltage}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{../plots/double_barrier_with_bias.pdf}
+    \end{center}
+    \caption{Potential in nanodevice after applying bias voltage 50 meV}
+    \label{fig:bias_voltage}
+\end{figure}
+
+Current-voltage characteristic has been calculated for bias voltage in range $(0, 500)$ meV (fig. \ref{fig:tsu_esaki}).
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{../plots/iv_characteristic.pdf}
+    \end{center}
+    \caption{Current-voltage characteristic of double potential barrier (resonant-tunneling diode).}
+    \label{fig:tsu_esaki}
+\end{figure}
+
+The system quickly achieves maximum in current, but then currect fals near to zero.
+This characteristic is very similar to ones measured in laboratory.
+
+\section*{Task 3}
+
+In final task quantum point contact potential was created.
+Potential coming from qpc has been show at fig. \ref{fig:qpc_potential}.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{../plots/qpc_potential_map.pdf}
+    \end{center}
+    \caption{Potential map in quantum point contact.}
+    \label{fig:qpc_potential}
+\end{figure}
+
+Then using adiabatic approximation effective potential was calculated along $x$-dimension of qpc (fig. \ref{fig:qpc_eff_pot}).
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{../plots/qpc_states_energies.pdf}
+    \end{center}
+    \caption{Effective potential felt by electron for 5 states.}
+    \label{fig:qpc_eff_pot}
+\end{figure}
+
+Using few first states (used 5) qpc conductance as a depedency of energy was calculated (fig. \ref{fig:cond}).
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{../plots/qpc_conductance.pdf}
+    \end{center}
+    \caption{Conductance as a dependency of energy in defined quantum point contact.}
+    \label{fig:cond}
+\end{figure}
+
+Characteristic quantisation of conductance was observed, where one quant of conductance is equal to $2\frac{e^2}{h}$.
+As the final task for two energies (50 meV and 100 meV) conductance was calculated as a function of gate voltage (fig. \ref{fig:cond_volt}).
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{../plots/cond_vs_voltage.pdf}
+    \end{center}
+    \caption{Conductance as a dependency of gate voltage in defined quantum point contact for electron energy 50 meV and 100 meV.}
+    \label{fig:cond_volt}
+\end{figure}
+
+Conductance is also quantized versus plot voltage.
+Conductance at 0 voltage is equal to five which is chosen number of states used in calculations.
+For bigger number of used states bigger value of conductance would be calculated at 0 energy.
+
+\section*{Summary}
+
+Transfer matrix method has been show to be very accurate in one dimensional problems.
+We can use Tsu-Esaki formula to get conductance values which are measureable.
+For more dimensions we can use adiabatic approximation in order to reduce number of dimensions.
+
+\end{document}

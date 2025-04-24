@@ -19,7 +19,7 @@ function solve(qs::QuantumSystem)
         matrix *= TransferMatrix(qs, i)
     end
     
-    trans_first = (real(qs.k[end])*qs.m[begin]) / (real(qs.k[begin]) * qs.m[end])
+    trans_first = (abs(qs.k[end])*qs.m[begin]) / (abs(qs.k[begin]) * qs.m[end])
     trans_second = 1. / abs(matrix[1,1])^2
 
     results.transmittance =  trans_first * trans_second

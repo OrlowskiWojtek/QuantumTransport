@@ -3,6 +3,8 @@ include("TransferMatrix.jl")
 
 using CairoMakie
 
+set_theme!(theme_latexfonts())
+
 function plotQuantumSystem(qd::QuantumSystem, disp = false)::Figure
     constants = getConstants()
 
@@ -34,7 +36,7 @@ end
 
 function plotCurrentVoltage(current, voltage, disp = false)::Figure
     fig = Figure();
-    ax = Axis(fig[1,1], xlabel = "Vbias", ylabel = "j")
+    ax = Axis(fig[1,1], xlabel = "Vbias [meV]", ylabel = "j")
     lines!(voltage, current)
 
     disp && display(fig)
@@ -43,13 +45,6 @@ function plotCurrentVoltage(current, voltage, disp = false)::Figure
 end
 
 include("QuantumPointContact.jl")
-
-function plotQPC(qpc::QuantumPointContact, disp = false)::Figure
-    fig = Figure();
-    ax = Axis(fig[1,1], xlabel = "x [nm]", ylabel = "y [nm]")
-
-    return fig
-end
 
 function plotQPCPotential(qpc::QuantumPointContact, disp = false)::Figure
     N = 100
@@ -75,12 +70,15 @@ end
 
 function plotQPCEnergies(energies, qpc::QuantumPointContact, disp = false)::Figure
     fig = Figure()
-    ax = Axis(fig[1,1])
-    
-    for state in eachrow(energies)
-        lines!(ax, state)
+    ax = Axis(fig[1,1], xlabel = "x [nm]", ylabel = "Energy [meV]")
+    c = getConstants()
+
+    xvec = collect(LinRange(0, qpc.length, size(energies, 2))) .* c.BohrRadius
+    for (idx, state) in enumerate(eachrow(energies))
+        lines!(ax, xvec, state .* c.HartreeTomV, label = "State $idx")
     end
 
+    axislegend()
     disp && display(fig)
 
     return fig
@@ -88,11 +86,25 @@ end
 
 function plotConductances(energies, conductances, disp = false)::Figure
     fig = Figure()
-    ax = Axis(fig[1,1])
+    ax = Axis(fig[1,1], xlabel = "Energy [eV]", ylabel = "G [2e²/h]")
+    c = getConstants()
 
-    lines!(ax, energies, conductances)
+    lines!(ax, energies .* c.HartreeTomV, conductances)
     
     disp && display(fig)
 
+    return fig
+end
+
+function plotConductanceVsVoltage(voltage, cond_e1, cond_e2, disp = false)::Figure
+    fig = Figure()
+    ax = Axis(fig[1,1], xlabel = "Voltage [V]", ylabel = "G [2e²/h]")
+
+    lines!(ax, voltage, cond_e1, label = "E = 50 meV")
+    lines!(ax, voltage, cond_e2, label = "E = 100 meV")
+    
+    axislegend()
+
+    disp && display(fig)
     return fig
 end

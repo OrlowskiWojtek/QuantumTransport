@@ -3,3 +3,8 @@ Outside used packages:
 - ProgressMeter
 - Makie
 
+All to run create folder plots/ in lab2/ directory, and then run
+'''
+cd src/
+julia main.jl
+'''

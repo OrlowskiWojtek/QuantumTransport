@@ -63,6 +63,21 @@ function initQPC()::QuantumPointContact
     return QuantumPointContact(eps, d, Vg, W, L, gate_begin, gate_end, gate_spacing)
 end
 
+function initQPC(gate_voltage::Float64)::QuantumPointContact
+    c = getConstants()
+
+    eps = 13.6
+    d = 3. / c.BohrRadius
+    Vg = gate_voltage / c.HartreeTomV
+    W = 50. / c.BohrRadius
+    L = 100. / c.BohrRadius
+    gate_begin   = 0.3
+    gate_end     = 0.7
+    gate_spacing = 0.6
+
+    return QuantumPointContact(eps, d, Vg, W, L, gate_begin, gate_end, gate_spacing)
+end
+
 function calculateEffectivePotential(n::Int64, qpc::QuantumPointContact; N::Int64 = 100)
     xs = collect(LinRange(0, qpc.length, N))
     ys = collect(LinRange(-qpc.width/2, qpc.width/2, N))
@@ -96,6 +111,7 @@ function calculateEffectivePotential(n::Int64, qpc::QuantumPointContact; N::Int6
 end
 
 include("TransferMatrix.jl")
+using ProgressMeter
 
 function calcConductance(qpc::QuantumPointContact)
     c = getConstants()
@@ -104,8 +120,8 @@ function calcConductance(qpc::QuantumPointContact)
     conductances = Vector{Float64}(undef, N)
 
     states = 5
-    for (idx, ene) in enumerate(energies)
-        conductances[idx] = getConductance(ene, states, qpc, 200)
+    @showprogress desc = "Calculating conductance" for (idx, ene) in enumerate(energies)
+        conductances[idx] = getConductance(ene, states, qpc, 100)
     end
 
     return energies, conductances

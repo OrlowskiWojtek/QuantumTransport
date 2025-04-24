@@ -101,7 +101,7 @@ function task2(disp)
     save("../plots/double_barrier_with_bias.pdf", f)
 
     # for defined system solve TsuEsakiFormula
-    V_bias = collect(LinRange(0, 500, 100))
+    V_bias = collect(LinRange(0, 500, 200))
     currents = Vector{Float64}(undef, length(V_bias))
     mu_s = 87. / constants.HartreeTomV
     mu_d = 87. / constants.HartreeTomV
@@ -121,14 +121,37 @@ include("utils/QuantumPointContact.jl")
 function task3(disp)
     qpc = initQPC()
 
-    f = plotQPCPotential(qpc, false)
+    f = plotQPCPotential(qpc, disp)
     save("../plots/qpc_potential_map.pdf", f)
 
     energies = calculateEffectivePotential(5, qpc)
-    plotQPCEnergies(energies, qpc, false)
+    f = plotQPCEnergies(energies, qpc, disp)
+    save("../plots/qpc_states_energies.pdf", f)
 
     ene, cond = calcConductance(qpc)
-    plotConductances(ene, cond, true)
+    f = plotConductances(ene, cond, true)
+    save("../plots/qpc_conductance.pdf", f)
+
+    # task 3.3
+    c = getConstants()
+    E1 = 50   / c.HartreeTomV
+    E2 = 100  / c.HartreeTomV
+
+    voltages = LinRange(0, 25, 100)
+    cond_e1 = Vector{Float64}(undef, length(voltages))
+    cond_e2 = Vector{Float64}(undef, length(voltages))
+    nstates = 5
+
+    @showprogress desc = "Calculating conductance vs Vg" for (idx, vgate) in enumerate(voltages)
+        qpc = initQPC(vgate * 1000)
+        ce1 = getConductance(E1, nstates, qpc, 100)
+        ce2 = getConductance(E2, nstates, qpc, 100)
+        cond_e1[idx] = ce1
+        cond_e2[idx] = ce2
+    end
+    
+    f = plotConductanceVsVoltage(voltages, cond_e1, cond_e2, disp)
+    save("../plots/cond_vs_voltage.pdf", f)
 end
 
 function getTaskManager()
