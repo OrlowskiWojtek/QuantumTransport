@@ -4,7 +4,7 @@ import kwant as kw
 class Utils:
     sigma_x = np.matrix([[0, 1], [1, 0]], dtype = np.complex64)
     sigma_y = np.matrix([[0, -1j], [1j, 0]], dtype = np.complex64)
-    sigma_z = np.matrix([[1j, 0], [0, -1j]], dtype = np.complex64)
+    sigma_z = np.matrix([[1, 0], [0, -1]], dtype = np.complex64)
 
     bohr_magneton_au = 0.5
     lande_g = -50.
