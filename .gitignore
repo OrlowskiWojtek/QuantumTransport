@@ -1,1 +1,8 @@
-build/
+plots/
+__pycache__/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.gz
