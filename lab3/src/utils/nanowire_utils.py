@@ -116,7 +116,7 @@ def wave_function(nw, E, nr_lead, *, ax = None):
     sys=make_system(nw)
     wave=kwant.wave_function(sys, E)
     density=(abs(wave(nr_lead))**2).sum(axis=0)
-    kwant.plotter.map(sys,density, ax = ax)
+    kwant.plotter.map(sys,density, ax = ax, dpi = 300)
 
 #fplots the dos of an electron with energy E
 def dos(nw, E):
@@ -145,6 +145,3 @@ class NanowireSystem():
         self.V0 = V0
         self.sigma = sigma
         self.B = B
-        
-
-
