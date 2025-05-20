@@ -103,6 +103,24 @@ class Plotter():
 
         plt.close(fig);
 
+    def plot_transmittance_alpha(self, alpha_values, transmittances, *, filename = None, show = False):
+        fig = plt.figure()
+        plt.plot(alpha_values, transmittances[0, :], color = 'blue', linestyle = "-", label = r"$T_{up\rightarrow up}$")
+        plt.plot(alpha_values, transmittances[1, :], color = 'orange', linestyle = "--", label = r"$T_{up\rightarrow down}$")
+        plt.plot(alpha_values, transmittances[2, :], color = 'green', linestyle = "-", label = r"$T_{down\rightarrow up}$")
+        plt.plot(alpha_values, transmittances[3, :], color = 'red', linestyle = "--", label = r"$T_{down\rightarrow down}$")
+        plt.xlabel(r"$E$ [eV]")
+        plt.ylabel(r"$\alpha$ [eVnm]")
+        plt.legend()
+
+        if(filename != None):
+            plt.savefig("../plots/"+filename)
+
+        if(show):
+            plt.show()
+
+        plt.close(fig);
+
     def plot_wavefunction(self, sys, dens, *, filename = None, show = False):
         fig = plt.figure()
         ax = plt.axes()

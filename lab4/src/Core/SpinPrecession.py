@@ -1,4 +1,5 @@
 import kwant
+import tinyarray
 import numpy as np
 import matplotlib.pyplot as plt
 from . import Utils as utl
@@ -11,7 +12,8 @@ class SpinSystem():
 
     def __init__(self, *, dx = 4, L = int(500), W = int(25), m = 0.014
                         , Bx = 0., By = 0., Bz = 0.
-                        , alpha = 0.000, additional_By_boundaries = None, additional_By = 0.):
+                        , alpha = 0.000, additional_By_boundaries = None, additional_By = 0.
+                        , alpha_boundaries = None):
         self.dx = self.u.nm2au(dx)
         self.L = int(L)
         self.W = int(W)
@@ -31,7 +33,7 @@ class SpinSystem():
 
         self.add_term = additional_By_boundaries
         self.additional_By = self.u.T2au(additional_By)
-
+        self.alpha_boundaries = alpha_boundaries
 
     def make_system(self): 
         def onsite(site):
@@ -43,10 +45,28 @@ class SpinSystem():
             return value
 
         def hopping_x(sitei, sitej):
-            return -self.precalc_t * np.identity(2) + 1j * self.precalc_tso * self.u.sigma_y
-        
+            value = -self.precalc_t * np.identity(2) 
+
+            (xi, yi) = sitei.pos
+            (xj, yj) = sitej.pos
+
+            if(self.alpha_boundaries != None):
+                if((xi > self.alpha_boundaries[0] * self.L * self.dx) and (xj < self.alpha_boundaries[1] * self.L * self.dx)):
+                    value = value + 1j * self.precalc_tso * self.u.sigma_y
+
+            return value
+
         def hopping_y(sitei, sitej):
-            return -self.precalc_t * np.identity(2) - 1j * self.precalc_tso * self.u.sigma_x
+            (xi, yi) = sitei.pos
+            (xj, yj) = sitej.pos
+
+            value = -self.precalc_t * np.identity(2) 
+            if(self.alpha_boundaries != None):
+                if((xi > self.alpha_boundaries[0] * self.L * self.dx) and (xj < self.alpha_boundaries[1] * self.L * self.dx)):
+
+                    value = value - 1j * self.precalc_tso * self.u.sigma_x
+       
+            return value
 
         sys = kwant.Builder()  
         lat = kwant.lattice.square(self.dx, norbs=2)
@@ -103,14 +123,9 @@ class SpinSystem():
         t=smatrix.transmission((leads[0], spins[0]), (leads[1], spins[1]))
         return t
 
-    density_up = np.array([[1,0],\
-    [0,0]])
-
-    density_down= np.array([[0,0],\
-    [0,1]])
-
-    density_both= np.array([[1,0],\
-    [0,1]])
+    density_up = tinyarray.array([[1,0], [0,0]])
+    density_down = tinyarray.array([[0,0], [0,1]])
+    density_both = tinyarray.array([[1,0], [0,1]])
 
     def wave_function(self, E):
         E = self.u.eV2au(E)
@@ -126,6 +141,21 @@ class SpinSystem():
         density_both_map    =   density_both_op(wave_f[0])
         
         return (density_up_map, density_down_map, density_both_map, sys)
+
+    def wave_function_spins(self, E):
+        E = self.u.eV2au(E)
+        sys = self.make_system()
+        wave_f = kwant.wave_function(sys, E)(0)
+
+        density_x_op = kwant.operator.Density(sys, self.u.sigma_x)
+        density_y_op = kwant.operator.Density(sys, self.u.sigma_y)
+        density_z_op = kwant.operator.Density(sys, self.u.sigma_z)
+
+        density_x_map = density_x_op(wave_f[0])
+        density_y_map = density_y_op(wave_f[0])
+        density_z_map = density_z_op(wave_f[0])
+        
+        return (density_x_map, density_y_map, density_z_map, sys)
 
     def current(self, E):
         E = self.u.eV2au(E)
