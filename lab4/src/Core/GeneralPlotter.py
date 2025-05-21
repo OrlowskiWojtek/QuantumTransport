@@ -92,7 +92,7 @@ class Plotter():
         plt.plot(bys_values, transmittances[2, :], color = 'green', linestyle = "-", label = r"$T_{down\rightarrow up}$")
         plt.plot(bys_values, transmittances[3, :], color = 'red', linestyle = "--", label = r"$T_{down\rightarrow down}$")
         plt.xlabel(r"$E$ [eV]")
-        plt.ylabel(r"Conductance $[\frac{e^2}{h}]$")
+        plt.ylabel(r"Transmittance")
         plt.legend()
 
         if(filename != None):
@@ -109,8 +109,10 @@ class Plotter():
         plt.plot(alpha_values, transmittances[1, :], color = 'orange', linestyle = "--", label = r"$T_{up\rightarrow down}$")
         plt.plot(alpha_values, transmittances[2, :], color = 'green', linestyle = "-", label = r"$T_{down\rightarrow up}$")
         plt.plot(alpha_values, transmittances[3, :], color = 'red', linestyle = "--", label = r"$T_{down\rightarrow down}$")
-        plt.xlabel(r"$E$ [eV]")
-        plt.ylabel(r"$\alpha$ [eVnm]")
+        plt.xlabel(r"$\alpha$ [eVnm]")
+        plt.ylabel(r"Transmittance")
+        
+        plt.tight_layout()
         plt.legend()
 
         if(filename != None):
@@ -147,7 +149,23 @@ class Plotter():
 
         plt.close(fig)
 
+    def plot_g_cond(self, bys_values, transmittances, *, filename = None, show = False):
+        fig = plt.figure()
+        plt.plot(bys_values, transmittances[0, :], color = 'blue', linestyle = "-", label = r"$G_{up}$")
+        plt.plot(bys_values, transmittances[1, :], color = 'red', linestyle = "-", label = r"$G_{down}$")
+        plt.plot(bys_values, transmittances[2, :], color = 'green', linestyle = "-", label = r"$G_{total}$")
+        plt.xlabel(r"$\alpha$ [eVnm]")
+        plt.ylabel(r"Conductance $[\frac{e^2}{h}]$")
+        plt.legend()
+        plt.tight_layout()
 
+        if(filename != None):
+            plt.savefig("../plots/"+filename)
+
+        if(show):
+            plt.show()
+
+        plt.close(fig);
 
 
 

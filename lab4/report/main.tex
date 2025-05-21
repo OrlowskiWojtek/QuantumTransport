@@ -1,0 +1,242 @@
+\documentclass[a4paper, 12pt]{article}
+
+\input{~/Desktop/Studia/LaTeX/setup_eng.tex}
+\author{Wojciech Orlowski}
+\title{Introduction to spintronics – spin transistor in \texttt{Kwant} package}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+
+Using \texttt{Kwant} package few important tranpsort properties including spin interaction has been calculated.
+In order to include spin interaction in calculations most of values (hoppings and onsite) are represented as 2D arrays.
+
+\section*{Spin precession in external magnetic field}
+
+System used in calculations was simple nanowire with two leads (fig. \ref{fig:ex1_system}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{../plots/ex1_system.pdf}
+    \end{center}
+    \caption{System used in calculations}
+    \label{fig:ex1_system}
+\end{figure}
+
+As a check for correct build of system firstly dispersion relation without magnetic field has been calculated (fig. \ref{fig:ex1_disp}).
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.30\textwidth]{../plots/ex1_disp.pdf}
+    \end{center}
+    \caption{Dispersion relation in system without magnetic field.}
+    \label{fig:ex1_disp}
+\end{figure}
+
+Next magnetic field has been applied in directions $x$, $y$ and $z$.
+For all directions dispersion relation has been calculated (fig. \ref{fig:ex1_disp_magn}).
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{subfigure}{0.30\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_disp_bx_1.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.30\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_disp_by_1.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.30\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_disp_bz_1.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Dispersion relation after applyingmagnetic field with amplitude 1T in (a) $x$, (b) $y$, (c) $z$ direction.}
+    \label{fig:ex1_disp_magn}
+\end{figure}
+
+Observed Zeeman splitting does not depend on the direction of magnetic field.
+
+For the next step conductance as a function of incident electron energy has been calculated (fig. \ref{fig:ex1_cond}).
+Conductance has been calculated with constant magnetic field in $z$ direction with amplitude 1T.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{../plots/ex1_conductance_bz_1.pdf}
+    \end{center}
+    \caption{Conductance}
+    \label{fig:ex1_cond}
+\end{figure}
+
+\newpage 
+Additional magnetic field has been introduced.
+In the region from $0.2 \cdot L$ to $0.8 \cdot L$ additional magnetic field has been applied in $y$ direction.
+Tranmission coefficients including spin rotation has beend calculated as a function of $B_y$ field (fig. \ref{fig:ex1_trans}).
+Value of $B_z$ has been changed to 0.1 T.
+Energy of electron has been equal to 0.005 eV.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{../plots/ex1_transmittances.pdf}
+    \end{center}
+    \caption{Transmission coefficient for different incident electrons as a function external magnetic field in $y$ direction.}
+    \label{fig:ex1_trans}
+\end{figure}
+
+For the same system $B_y = 0.6$ has been selected.
+<aps of charge density for spin up and spin down has been calculated (fig. \ref{fig:ex1_density_maps}).
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_density_up.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_density_down.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Charge density for (a) spin up, (b) spin down.}
+    \label{fig:ex1_density_maps}
+\end{figure}
+
+For the same system maps of spin density has been calculated (fig. \ref{fig:ex1_spin_maps})
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_density_x.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_density_y.pdf}
+            \caption{}
+        \end{subfigure}
+        \\
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex1_density_z.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Spin density for (a) $\sigma_x$, (b) $\sigma_y$, (c) $\sigma_z$.}
+    \label{fig:ex1_spin_maps}
+\end{figure}
+
+It has been shown that spin of electron can be manipulated using external magnetic field.
+
+\section*{Spin transistor based on spin-orbit cupling}
+
+Instead of using magnetic field in transitor (which would make device bigger) we can try to steer spin by Rashba SO interaction.
+For new system $\alpha$ parameter controls transport properties. 
+This parameter is controlled by external electric field (for instance induced by gate electrodes).
+
+Firstly dispersion relation has been calculated assuming that SO interaction is present in device (fig. \ref{fig:ex2_disp}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.35\textwidth]{../plots/ex2_disp.pdf}
+    \end{center}
+    \caption{Dispersion relation in system with SO coupling.}
+    \label{fig:ex2_disp}
+\end{figure}
+
+Clearly visible is doubling number of bands.
+
+Next conductance as a function of electron energy has been calculated (fig. \ref{fig:ex2_cond}).
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{../plots/ex2_conductance.pdf}
+    \end{center}
+    \caption{Conductance as a function of incident electron energy.}
+    \label{fig:ex2_cond}
+\end{figure}
+
+Characteristic steps in conductance are observable.
+
+In following calculations SO interaction is present only from $0.2 \cdot L$ to $0.8 \cdot L$.
+For this system transmission coefficients as a function of $\alpha$ parameter  has been calculated (fig. \ref{fig:ex2_trans}).
+Transmission coefficients shows transmission to different subbands so also to different spins.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{../plots/ex2_transmittances.pdf}
+    \end{center}
+    \caption{Transmissions coefficienets as a function of $\alpha$ parameter.}
+    \label{fig:ex2_trans}
+\end{figure}
+
+We can clearly see some values of $\alpha$ that respons to total transition from spin up to spin down and vice versa.
+
+For the same system polarized onductance has been calculated as a function of $\alpha$.
+It has been calculated for three different values of $P$ parameter (fig. \ref{fig:ex2_g_cond}).
+
+\begin{figure}[h]
+    \begin{center}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=\textwidth]{../plots/ex_2_cond_p=0.2.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=\textwidth]{../plots/ex_2_cond_p=0.4.pdf}
+            \caption{}
+        \end{subfigure}
+        \\
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=\textwidth]{../plots/ex_2_cond_p=1.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Polarized conductances as a function of $\alpha$ parameter for $P$ parameter equal to (a) 0.2, (b) 0.4, (c) 1}
+    \label{fig:ex2_g_cond}
+\end{figure}
+
+For $\alpha$ value responding to the highest spin transition maps of charge density (fig. \ref{fig:ex2_density_maps}) and spin density (fig. \ref{fig:ex2_spin_map}) has been calculated.
+This $\alpha$ parameter has been arbirtrary set to 0.018 eVnm.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex2_density_up.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex2_density_down.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Charge density for (a) spin up, (b) spin down for incident electron energy 0.005 eV.}
+    \label{fig:ex2_density_maps}
+\end{figure}
+
+Spin change is clearly visible nearly center of nanowire.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex2_density_x.pdf}
+            \caption{}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex2_density_y.pdf}
+            \caption{}
+        \end{subfigure}
+        \\
+        \begin{subfigure}{0.49\textwidth}
+            \includegraphics[width=0.95\textwidth]{../plots/ex2_density_z.pdf}
+            \caption{}
+        \end{subfigure}
+    \end{center}
+    \caption{Spin density for (a) $\sigma_x$, (b) $\sigma_y$, (c) $\sigma_z$ for incident electron energy 0.005 eV.}
+    \label{fig:ex2_spin_map}
+\end{figure}
+
+\section*{Summary}
+
+\texttt{Kwant} again has been proven as a very useful tool in analyzing transport in nanoscopic system.
+Analysis of spin dependent systems requires changing dimensionality of some data
+Thankfully nice written \texttt{Kwant} API this change is not hard to implement.
+
+\end{document}

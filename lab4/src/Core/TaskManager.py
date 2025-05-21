@@ -48,51 +48,81 @@ class TaskManager():
             transmittances[2, idx] = t_downup
             transmittances[3, idx] = t_downdown
 
-        general_plotter.plot_transmittance(t_bys_values, transmittances, show = True, filename = "../plots/ex1_transmittances.pdf")
+        general_plotter.plot_transmittance(t_bys_values, transmittances, show = False, filename = "../plots/ex1_transmittances.pdf")
         sp = spin_system.SpinSystem(Bz = 0.1, additional_By = 0.6, additional_By_boundaries=[0.2, 0.8])
         sys = sp.make_system();
         E = 0.005
         up, down, both, sys = sp.wave_function(E)
-        general_plotter.plot_wavefunction(sys, up, show = True, filename = "ex1_density_up.pdf")
-        general_plotter.plot_wavefunction(sys, down, show = True, filename = "ex1_density_down.pdf")
-        general_plotter.plot_wavefunction(sys, both, show = True, filename = "ex1_density_both.pdf")
+        general_plotter.plot_wavefunction(sys, up, show = False, filename = "ex1_density_up.pdf")
+        general_plotter.plot_wavefunction(sys, down, show = False, filename = "ex1_density_down.pdf")
+        general_plotter.plot_wavefunction(sys, both, show = False, filename = "ex1_density_both.pdf")
 
         up, down, both, sys = sp.wave_function_spins(E)
-        general_plotter.plot_wavefunction(sys, up, show = True, filename = "ex1_density_x.pdf")
-        general_plotter.plot_wavefunction(sys, down, show = True, filename = "ex1_density_y.pdf")
-        general_plotter.plot_wavefunction(sys, both, show = True, filename = "ex1_density_z.pdf")
+        general_plotter.plot_wavefunction(sys, up, show = False, filename = "ex1_density_x.pdf")
+        general_plotter.plot_wavefunction(sys, down, show = False, filename = "ex1_density_y.pdf")
+        general_plotter.plot_wavefunction(sys, both, show = False, filename = "ex1_density_z.pdf")
 
     def task2(self, *,do_plot = False):
-        sp = spin_system.SpinSystem( L = int(200), alpha = 0.050)
-        #sys = sp.make_system()
-        #kw.plot(sys, show = do_plot, file = "../plots/ex2_system.pdf");
+        sp = spin_system.SpinSystem( L = int(200), alpha = 0.050, alpha_boundaries = [0., 1.])
+        sys = sp.make_system()
+        kw.plot(sys, show = do_plot, file = "../plots/ex2_system.pdf");
+        print("calculating dispersion")
 
-        #moments, enes = sp.dispersion(0, .05, 400)
-        #general_plotter.plot_dispersion(moments, enes, filename = "../plots/ex2_disp.pdf", show = False)
+        moments, enes = sp.dispersion(0, .05, 400)
+        general_plotter.plot_dispersion(moments, enes, filename = "../plots/ex2_disp.pdf", show = False)
+        #
+        print("calculating conductance")
+        enes, conds = sp.conductance(0.05, 50)
+        general_plotter.plot_conductance(conds, enes, filename = "../plots/ex2_conductance.pdf", show = False)
         
-        #enes, conds = sp.conductance(0.05, 50)
-        #general_plotter.plot_conductance(conds, enes, filename = "../plots/ex2_conductance.pdf", show = True)
-        
+        print("calculating transmittance")
+        ##to run for night
+        alpha_values = np.linspace(0, 0.050, 150) 
+        E = 0.005
+        transmittances = np.zeros((4, len(alpha_values)), dtype=np.float64)
+
+        for idx, alpha_value in enumerate(alpha_values):
+            sp = spin_system.SpinSystem(L = int(200), alpha = alpha_value, alpha_boundaries = [0.2, 0.8])
+            t_upup = sp.transmission(E, [1, 0], [1, 1])
+            t_updown = sp.transmission(E, [1, 0], [0, 1])
+            t_downup = sp.transmission(E, [1, 0], [1, 0])
+            t_downdown = sp.transmission(E, [1, 0], [0, 0])
+            transmittances[0, idx] = t_upup
+            transmittances[1, idx] = t_updown
+            transmittances[2, idx] = t_downup
+            transmittances[3, idx] = t_downdown
+
+        general_plotter.plot_transmittance_alpha(alpha_values, transmittances, show = False, filename = "../plots/ex2_transmittances.pdf")
+
+        print("calculating transmission")
         # to run for night
-        #alpha_values = np.linspace(0, 0.050, 100) 
-        #E = 0.005
-        #transmittances = np.zeros((4, len(alpha_values)), dtype=np.float64)
+        alpha_values = np.linspace(0, 0.050, 50) 
+        E = 0.005
+        g = np.zeros((3, len(alpha_values)), dtype=np.float64)
+        ps = [0.2, 0.4, 1]
 
-        #for idx, alpha_value in enumerate(alpha_values):
-        #    sp = spin_system.SpinSystem(alpha = alpha_value, alpha_boundaries = [0.2, 0.8])
-        #    t_upup = sp.transmission(E, [1, 0], [1, 1])
-        #    t_updown = sp.transmission(E, [1, 0], [0, 1])
-        #    t_downup = sp.transmission(E, [1, 0], [1, 0])
-        #    t_downdown = sp.transmission(E, [1, 0], [0, 0])
-        #    transmittances[0, idx] = t_upup
-        #    transmittances[1, idx] = t_updown
-        #    transmittances[2, idx] = t_downup
-        #    transmittances[3, idx] = t_downdown
+        for p in ps:
+            for idx, alpha_value in enumerate(alpha_values):
+                sp = spin_system.SpinSystem(L = int(200), alpha = alpha_value, alpha_boundaries = [0.2, 0.8])
+                t_upup, t_updown, t_downup, t_downdown = sp.transmission_all(E)
 
-        #general_plotter.plot_transmittance_alpha(alpha_values, transmittances, show = True, filename = "../plots/ex2_transmittances.pdf")
+                g_up = ((1 + p)/2) * t_upup + ((1 - p) / 2) * t_updown
+                g_down = ((1 + p)/2) * t_downup + ((1 - p) / 2) * t_downdown
+                g[0, idx] = g_up
+                g[1, idx] = g_down
+                g[2, idx] = ((1 + p) / 2) * g_up + ((1 - p) / 2) * g_down
 
-        
+            general_plotter.plot_g_cond(alpha_values, g, show = False, filename = f"../plots/ex_2_cond_p={p}.pdf")
+    
+        sp = spin_system.SpinSystem(L = int(200), alpha = 0.018, alpha_boundaries = [0.2, 0.8])
+        E = 0.005
+        up, down, both, sys = sp.wave_function(E)
+        general_plotter.plot_wavefunction(sys, up, show = False, filename = "ex2_density_up.pdf")
+        general_plotter.plot_wavefunction(sys, down, show = False, filename = "ex2_density_down.pdf")
+        general_plotter.plot_wavefunction(sys, both, show = False, filename = "ex2_density_both.pdf")
 
-        
-
+        up, down, both, sys = sp.wave_function_spins(E)
+        general_plotter.plot_wavefunction(sys, up, show = False, filename = "ex2_density_x.pdf")
+        general_plotter.plot_wavefunction(sys, down, show = False, filename = "ex2_density_y.pdf")
+        general_plotter.plot_wavefunction(sys, both, show = False, filename = "ex2_density_z.pdf")
 

@@ -51,7 +51,7 @@ class SpinSystem():
             (xj, yj) = sitej.pos
 
             if(self.alpha_boundaries != None):
-                if((xi > self.alpha_boundaries[0] * self.L * self.dx) and (xj < self.alpha_boundaries[1] * self.L * self.dx)):
+                if((xj > self.alpha_boundaries[0] * self.L * self.dx) and (xi < self.alpha_boundaries[1] * self.L * self.dx)):
                     value = value + 1j * self.precalc_tso * self.u.sigma_y
 
             return value
@@ -118,10 +118,22 @@ class SpinSystem():
 
     def transmission(self, E, leads, spins):
         E = self.u.eV2au(E)
-        sys= self.make_system()
+        sys = self.make_system()
         smatrix=kwant.smatrix(sys,E)
         t=smatrix.transmission((leads[0], spins[0]), (leads[1], spins[1]))
         return t
+
+    def transmission_all(self, E):
+        E = self.u.eV2au(E)
+        sys = self.make_system()
+        smatrix=kwant.smatrix(sys,E)
+
+        t_upup = smatrix.transmission((1, 1), (0, 1))
+        t_updown = smatrix.transmission((1, 0), (0, 1))
+        t_downup = smatrix.transmission((1, 1), (0, 0))
+        t_downdown = smatrix.transmission((1, 0), (0, 0))
+
+        return t_upup, t_updown, t_downup, t_downdown
 
     density_up = tinyarray.array([[1,0], [0,0]])
     density_down = tinyarray.array([[0,0], [0,1]])
@@ -157,48 +169,3 @@ class SpinSystem():
         
         return (density_x_map, density_y_map, density_z_map, sys)
 
-    def current(self, E):
-        E = self.u.eV2au(E)
-        sys = self.make_system()
-        wave_f = kwant.wave_function(sys, E)(0)
-
-        density_up_op   =   kwant.operator.Current(sys, self.density_up)
-        density_down_op =   kwant.operator.Current(sys, self.density_down)
-        density_both_op =   kwant.operator.Current(sys, self.density_both)
-
-        density_up_map      =   density_up_op(wave_f[0])
-        density_down_map    =   density_down_op(wave_f[0])
-        density_both_map    =   density_both_op(wave_f[0])
-        
-        return (density_up_map, density_down_map, density_both_map, sys)
-
-
-###########################################################################
-##  Define various functions calculating the basic physical properties   ##
-###########################################################################
-
-#calculates the reflection and transmission coefficient
-def transmission_reflection(nw, E):
-    E=eV2au(E)
-    sys=make_system(nw)
-    smatrix=kwant.smatrix(sys,E)
-    r=smatrix.transmission(0,0)
-    t=smatrix.transmission(1,0)
-    return r, t
-
-#fplots the dos of an electron with energy E
-def dos(nw, E):
-    E=eV2au(E)
-    sys=make_system(nw)
-    dos=kwant.ldos(sys, E)
-    f = kwant.plotter.map(sys,dos)
-    return f
-
-#plots the current of an electron with energy E incident in the contact nr_lead in the state nr_mod
-def current(nw, E, nr_lead, nr_mod, *, ax = None):
-    E=eV2au(E)
-    sys=make_system(nw)
-    current = kwant.operator.Current(sys).bind()
-    psi=kwant.wave_function(sys, E)(nr_lead)
-    curr=current(psi[nr_mod])
-    kwant.plotter.current(sys,curr, ax = ax)
