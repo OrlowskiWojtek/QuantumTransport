@@ -11,7 +11,7 @@ class Graphene:
                  t_eV=-3.0, # hopping pottential
                  W = 100,   # width of cell  (y dim)
                  L = 200,   # length of cell (x dim)
-                 B = 0,     # magnetic field
+                 B = 0.,     # magnetic field
                  V_np = 1.,  # potential amplitude
                  d = 1.      # smothness of potential
                  ):    
@@ -102,7 +102,6 @@ class Graphene:
         energies = [bands(k) for k in momenta]
         return (momenta / dx), energies
 
-
         #calculates the transmission coefficient - input in eV
     def transmission(self, E):
         E = self.u.eV2au(E)
@@ -123,4 +122,21 @@ class Graphene:
         energies=np.linspace(Emin, Emax,ne)
         cond=[self._transmission(self.u.eV2au(E)) for E in energies]
         return energies, cond
+
+    def wave_function(self, E, nr_lead, *, ax = None):
+        E=self.u.eV2au(E)
+        sys=self.make_system()
+        wave=kwant.wave_function(sys, E)
+        density=(abs(wave(nr_lead))**2).sum(axis=0)
+        kwant.plotter.map(sys,density, ax = ax, dpi = 300)
+
+    def current(self, E, nr_lead, nr_mod, *, ax = None):
+        E = self.u.eV2au(E)
+        sys = self.make_system()
+        current = kwant.operator.Current(sys).bind()
+        psi = kwant.wave_function(sys, E)(nr_lead)
+        curr = current(psi[nr_mod])
+        kwant.plotter.current(sys, curr, ax = ax)
+
+
 

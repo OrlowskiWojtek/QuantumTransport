@@ -1,0 +1,341 @@
+\documentclass{beamer}
+
+\input{~/Desktop/studia/LaTeX/setup_beamer.tex}
+\input{python_listing.tex}
+\newcommand{\imag}{\text{i}}
+
+\author[Wojciech Orłowski]{Wojciech Orłowski}
+\title[Project summary]{Fabry-Pérot oscillations in \textit{npn} junctions in graphene}
+\date{Kraków, 23.06.2025}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Introduction}
+\begin{frame}{Tight Binding model}
+	Hamiltonian in tight binding approximations can be written as:
+	\begin{equation}
+		\hat{H} = -t\sum_{<i,j>, \sigma}\left(\hat{a}^\dagger_{\sigma,i}\hat{b}_{\sigma,j} + \text{H.c.} \right) -t'\sum_{<<i,j>>,\sigma} \left(\hat{a}_{\sigma,i}^\dagger \hat{a}_{\sigma,j} + \hat{b}_{\sigma,i}^\dagger \hat{b}_{\sigma,j} + \text{H.c} \right),
+	\end{equation}
+	where $t$ is energy of hopping between nearest neighbours ($\approx 2.8$ eV), and $t'$ is energy of hopping between second nearest neighbours.
+	Indexes $i$ and $j$ indicates locations in two sublattices - $A$ and $B$.
+	Spin of particle is represented by $\sigma$.
+	$\hat{a}^\dagger (\hat{a})$ are creations (anihilation) operators on sublattice $A$ ($\hat{b}$ for sublattice $B$).
+\end{frame}
+
+\begin{frame}{Tight Binding model}
+	Hamiltonian for only neareset neighbours can be written as
+	\begin{equation}
+		\hat{H} = -t\sum_{<i,j>}\left(\hat{a}^\dagger_{i}\hat{b}_{j} + \hat{b}_{j}^\dagger \hat{a}_{i}  \right),
+	\end{equation}
+	\begin{equation}
+		\sum_{<i,j>}\left(\hat{a}^\dagger_{i}\hat{b}_{j} + \hat{b}_{j}^\dagger \hat{a}_{i}  \right) = \sum_{i\in A}\sum_{\vb*{\delta}}\left(\hat{a}^\dagger_{i}\hat{b}_{i+\vb*{\delta}} + \hat{b}_{i+\vb*{\delta}}^\dagger \hat{a}_{i}\right),
+	\end{equation}
+	where $\delta$ means sum over nearest neighbours.
+\end{frame}
+
+\begin{frame}
+	Next step involves switching operators to reciprocal space using Fourier transform
+	\begin{equation}
+		\hat{a}^\dagger_i = \frac{1}{\sqrt{N/2}}\sum_{\vb{k}} e^{\imag\vb{k}\cdot\vb{r}_i}\hat{a}_{\vb{k}}^\dagger.
+	\end{equation}
+	Hamiltonian after transformations can be written as
+	\begin{equation}
+		\hat{H} = \frac{-t}{N/2}\sum_{i\in A}\sum_{\vb*{
+				\delta}\, \vb{k}\, \vb{k'}}\left[e^{\imag (\vb{k} - \vb{k'})\cdot \vb{r}_i} e^{-\imag\vb{k'}\cdot \vb*{\delta}}\hat{a}^\dagger_{\vb{k}} \hat{b}_{\vb{k'}} + \text{H.c.}\right],
+	\end{equation}
+	we can simplify this by introducing property:
+	\begin{equation}
+		\sum_{i\in A} e^{\imag(\vb{k} - \vb{k'})\cdot \vb{r}_i} = \frac{N}{2}\delta_{\vb{kk'}}.
+	\end{equation}
+\end{frame}
+
+\begin{frame}
+	Simplify hamiltonian takes form
+	\begin{equation}
+		\hat{H} = -t\sum_{\vb*{\delta},\vb{k}}\left(e^{-\imag\vb{k\cdot\vb*{\delta}}}\hat{a}^\dagger_{\vb{k}}\hat{b}_{\vb{k}}  + e^{\imag\vb{k\cdot\vb*{\delta}}}\hat{b}^\dagger_{\vb{k}}\hat{a}_{\vb{k}} \right),
+	\end{equation}
+	which in simpler form is
+	\begin{equation}
+		\hat{H} = \sum_{\vb{k}} \Psi^\dagger \hat{h}\vb{(k)} \Psi,
+	\end{equation}
+	where
+	\begin{equation}
+		\vb*{\Psi}^\dagger \equiv
+		\begin{pmatrix}
+			\hat{a}^\dagger_{\vb{k}} & \hat{b}^\dagger_{\vb{k}}
+		\end{pmatrix}
+		\; \; \;
+		\vb*{\Psi} \equiv
+		\begin{pmatrix}
+			\hat{a}_{\vb{k}} \\ \hat{b}_{\vb{k}}
+		\end{pmatrix}
+	\end{equation}
+	and
+	\begin{equation}
+		\hat{h}\vb{(k)} \equiv -t
+		\begin{pmatrix}
+			0                 & \Delta_{\vb{k}} \\
+			\Delta_{\vb{k}}^* & 0
+		\end{pmatrix}.
+	\end{equation}
+\end{frame}
+
+\begin{frame}
+	Term
+	\begin{equation}
+		\hat{h}\vb{(k)} \equiv -t
+		\begin{pmatrix}
+			0                 & \Delta_{\vb{k}} \\
+			\Delta_{\vb{k}}^* & 0
+		\end{pmatrix}
+	\end{equation}
+	is nothing else than matrix representation of hamiltonian with elements
+	\begin{equation}
+		\Delta_{\vb{k}} = \sum_{\vb*{\delta}} e^{\imag \vb{k}\cdot \vb*{\delta}}.
+	\end{equation}
+	This approach leads to finding dispersion relation in graphene by finding eigenenergies of simplifier hamiltonian.
+	\begin{gather}
+		\Delta_{\vb{k}} = e^{\imag(\vb{k}\cdot\vb*{\delta_1})} + e^{\imag(\vb{k}\cdot\vb*{\delta_2})} + e^{\imag(\vb{k}\cdot\vb*{\delta_3})}
+		\\
+		=
+		e^{\imag(\vb{k}\cdot\vb*{\delta_3})}\left[1
+			+ e^{\imag(\vb{k}\cdot\vb*{\delta_1 - \delta_3})} + e^{\imag(\vb{k}\cdot\vb*{\delta_2 - \delta_3})}
+			\right]
+		\\
+		=
+		\dots
+		=
+		e^{-\imag k_x a}\left[1 + 2e^{\imag 3k_x\frac{a}{2}}\cos(\frac{\sqrt{3}}{2}k_y a) \right].
+	\end{gather}
+\end{frame}
+
+\begin{frame}
+	Final dispersion relation can be written as:
+	\begin{equation}
+		E_{\pm}(\vb{k}) = \pm t \sqrt{1 + 4\cos(\frac{3}{2}k_x a)\cos(\frac{\sqrt{3}}{2}k_y a) + 4 \cos[2](\frac{\sqrt{3}}{2}k_y a)}.
+	\end{equation}
+\end{frame}
+
+\section{Problem}
+
+\begin{frame}
+	Main goal of project is to analyse Klein Tunelling across $n - p - n$ ($p - n - p$) junctions in graphene.
+	Because of zero energy gap in graphene $n / p$ interfaces act as semi-transparent mirrors.
+	Thus charge carriers propagating across a bipolar junction can perform multiple reflections - as in Fabry-Perot interferometer.
+
+	Density of carriers is usually changed by applying $V_{\text{TG}}$ and $V_{\text{BG}}$ voltages.
+	In calculations those voltages are applied by
+	\begin{itemize}
+		\item applying and changing amplitude of potential barrier ($V_{\text{TG}}$),
+		\item changing energy of electron ($V_{\text{BG}}$).
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	Results should be similar to one from instruction:
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../figures/wymagania.png}
+		\caption{Measured values of conductance in graphene heterojunction.}
+	\end{figure}
+
+\end{frame}
+
+\section{System}
+
+\begin{frame}[fragile]
+	\begin{minted}[frame = lines]{Python}
+    class Graphene:
+    u = utl.Utils()
+
+    def __init__(self, 
+                 a_nm=0.25, # graphene primitive vector
+                 sf=8.,     # scaling factor
+                 t_eV=-3.0, # hopping pottential
+                 W = 100,   # width of cell  (y dim)
+                 L = 200,   # length of cell (x dim)
+                 B = 0.,    # magnetic field
+                 V_np = 1., # potential amplitude
+                 d = 10.    # smothness of potential
+                 ):    
+    ...
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Graphene lattice}
+	\begin{minted}{Python}
+    self.graphene = kwant.lattice.general(
+        [(0, self.a0), (cos_30 * self.a0, sin_30 * self.a0)],
+        [(0, 0), (self.a0 / np.sqrt(3), 0)],
+        norbs=1,
+    )
+    self.a_sub, self.b_sub = self.graphene.sublattices
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{make\_system() for graphene}
+	\begin{minted}{Python}
+        def pote_x(x):
+            lt_term = np.tanh((x + self.L/8)/self.d)
+            rt_term = np.tanh((x - self.L/8)/self.d)
+
+            return self.V_np * ( lt_term - rt_term ) / 2
+
+        def nn_hopping(site1, site2):
+            x1, y1 = site1.pos
+            x2, y2 = site2.pos
+            pereir = -self.B * (y1 + y2) * (x2 - x1) / 2
+
+            return self.t0 * np.exp(1j * pereir)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{make\_system() for graphene}
+	\begin{minted}{Python}
+        sys = kwant.Builder()
+
+        graphene = self.graphene
+        sys[graphene.shape(rect, (0, 0))] = potential
+        sys[graphene.neighbors()] = nn_hopping
+
+        syml = kwant.TranslationalSymmetry([-np.sqrt(3) * self.a0, 0])
+
+        leadl = kwant.Builder(syml)
+        leadl[graphene.shape(lead_shape, (0, 0))] = pote_x(self.x_min)
+        leadl[graphene.neighbors()] = nn_hopping
+    \end{minted}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\begin{center}
+			\includegraphics[width=0.7\textwidth]{../figures/GrapheneSystem_sf16.png}
+		\end{center}
+		\caption{Graphene lattice for $sf = 16$. This scaling factor was to large.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\begin{center}
+			\includegraphics[width=0.7\textwidth]{../figures/GrapheneSystem.png}
+		\end{center}
+		\caption{Graphene lattice used in simulation. Color indicates potential value.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Smoothness parameter}
+	\begin{figure}
+		\centering
+		\begin{subfigure}{0.49\textwidth}
+			\includegraphics[width=\textwidth]{../figures/barrier.pdf}
+			\caption{}
+		\end{subfigure}
+		\begin{subfigure}{0.49\textwidth}
+			\includegraphics[width=\textwidth]{../figures/barrier_d5.pdf}
+			\caption{}
+		\end{subfigure}
+		\caption{Smooth potential barrier used in simulation $d = $ (a) 10 nm, (b) 5~nm.}
+	\end{figure}
+\end{frame}
+
+\section{Results}
+
+\begin{frame}
+	As a first check dispersion relation has been calculated.
+	\begin{columns}
+        \column{0.6\textwidth}
+		\begin{figure}
+			\begin{center}
+				\includegraphics[width=\textwidth]{../figures/dispersion.pdf}
+			\end{center}
+			\caption{Dispersion relation in graphene layer.}
+		\end{figure}
+        \hspace{0.03\textwidth}
+        \column{0.35\textwidth}
+        Obtained linear dispersion relation near dirac cone is characteristic for graphene. 
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+    In order to check a range of calculations simple currents has been calculated.
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/currents.pdf}
+        \end{center}
+        \caption{Currents in system with changing incident electron energy and potential barier height.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/conductance.png}
+        \end{center}
+        \caption{Conductance scan over incident electron energy $E$ and amplitude of potential barrier $V_{np}$.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/conductance_long_e05_v02.pdf}
+        \end{center}
+        \caption{Finer conductance scan over incident electron energy $E$ and amplitude of potential barrier $V_{np}$. Black dashed line has $\frac{\pi}{4}$ slope and has been added as reference.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    Calculations results can be compared to other theoretical calculations.
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{../figures/compare_g.png}
+        \end{center}
+        \caption{Figure 1e from \url{10.1103/PhysRevLett.113.116601}. Similarities between plot are clearly visible, however obtained in one project has much lower range}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/conductance_b_field_scan_large.png}
+        \end{center}
+        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines has been plotted for better visualisation of transmittance maxima.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/conductance_b_field_scan_low.png}
+        \end{center}
+        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines has been plotted for better visualisation of transmittance maxima.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{../figures/currents_changing_b.pdf}
+        \end{center}
+        \caption{Currents in system with external magnetic field and changing potential barier height. Incident electron energy is equal to 0.01 eV. Parameters have been chosen in order to obtain maxima and minima of transmittance.}
+    \end{figure}
+\end{frame}
+
+\section{Summary}
+
+\begin{frame}
+    Calculations proved that:
+    \begin{itemize}
+        \item conductance oscilations are theoretically observable in graphene heterojunctions, 
+        \item introducing smooth potential barrier for electrons may act as material with different refractive index for photons (optics analogy),
+        \item external magnetic field acts on electrons and shifts oscilations,
+    \end{itemize}
+\end{frame}
+
+\frame{\titlepage}
+
+
+\end{document}

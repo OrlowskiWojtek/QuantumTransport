@@ -17,4 +17,4 @@ ax = Axis(fig[1,1], yticks = ([5.], [L"V_{np}"]), xlabel = "x [nm]", ylabel = "p
 lines!(ax, xs * 0.0529, p)
 
 display(fig)
-save("../figures/barrier.pdf", fig)
+save("../figures/barrier_d5.pdf", fig)
