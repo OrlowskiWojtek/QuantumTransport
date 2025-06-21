@@ -1,0 +1,8 @@
+figures/
+data/
+semiconductors_graphene/
+_minted-main/
+*.nav
+*.snm
+*.toc
+*.vrb
