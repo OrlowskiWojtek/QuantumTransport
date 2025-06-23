@@ -11,11 +11,11 @@ class TaskManager:
     gen_plt = plt_wrapper.Plotter()
 
     def test_task(self):
-        gr = graphene.Graphene(sf = 16)
+        gr = graphene.Graphene(sf = 8)
         sys = gr.make_system()
         
-        save_at = os.path.join(self.u.plots_path(), 'GrapheneSystem_sf16.png')
-        kw.plot(sys, site_color = lambda site: sys.hamiltonian(site,site), cmap = 'RdBu', dpi = 300, show = True, file = save_at)
+        #save_at = os.path.join(self.u.plots_path(), 'GrapheneSystem_sf16.png')
+        kw.plot(sys, site_color = lambda site: sys.hamiltonian(site,site), cmap = 'RdBu', dpi = 300, show = True)
         plt.show()
 
         #moments, enes = gr.get_bands();

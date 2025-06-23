@@ -2,6 +2,7 @@ figures/
 data/
 semiconductors_graphene/
 _minted-main/
+data/
 *.nav
 *.snm
 *.toc

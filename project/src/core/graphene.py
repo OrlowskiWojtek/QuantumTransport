@@ -19,8 +19,8 @@ class Graphene:
         self.a0 = self.u.nm2au(a_nm) * sf
         self.t0 = self.u.eV2au(t_eV) / sf
 
-        self.L = self.u.nm2au(L)
-        self.W = self.u.nm2au(W)
+        self.L = self.u.nm2au(L) 
+        self.W = self.u.nm2au(W) 
 
         self.x_min = -self.L / 2.
         self.x_max = self.L / 2.
@@ -97,7 +97,7 @@ class Graphene:
         sys = self.make_system()
         dx = np.sqrt(3) * self.a0
         k_max = np.pi / dx
-        momenta = np.linspace(-k_max * dx, k_max * dx, 200)
+        momenta = np.linspace(-k_max * dx, k_max * dx, 2000)
         bands = kwant.physics.Bands(sys.leads[nr_lead])
         energies = [bands(k) for k in momenta]
         return (momenta / dx), energies

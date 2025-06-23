@@ -17,14 +17,14 @@
 	\begin{equation}
 		\hat{H} = -t\sum_{<i,j>, \sigma}\left(\hat{a}^\dagger_{\sigma,i}\hat{b}_{\sigma,j} + \text{H.c.} \right) -t'\sum_{<<i,j>>,\sigma} \left(\hat{a}_{\sigma,i}^\dagger \hat{a}_{\sigma,j} + \hat{b}_{\sigma,i}^\dagger \hat{b}_{\sigma,j} + \text{H.c} \right),
 	\end{equation}
-	where $t$ is energy of hopping between nearest neighbours ($\approx 2.8$ eV), and $t'$ is energy of hopping between second nearest neighbours.
+	where $t$ is the energy of hopping between nearest neighbours ($\approx 2.8$ eV), and $t'$ is the energy of hopping between second neighbours.
 	Indexes $i$ and $j$ indicates locations in two sublattices - $A$ and $B$.
 	Spin of particle is represented by $\sigma$.
-	$\hat{a}^\dagger (\hat{a})$ are creations (anihilation) operators on sublattice $A$ ($\hat{b}$ for sublattice $B$).
+	$\hat{a}^\dagger (\hat{a})$ are creation (anihilation) operators on sublattice $A$ ($\hat{b}$ for sublattice $B$).
 \end{frame}
 
 \begin{frame}{Tight Binding model}
-	Hamiltonian for only neareset neighbours can be written as
+	Hamiltonian for only nearest neighbours can be written as
 	\begin{equation}
 		\hat{H} = -t\sum_{<i,j>}\left(\hat{a}^\dagger_{i}\hat{b}_{j} + \hat{b}_{j}^\dagger \hat{a}_{i}  \right),
 	\end{equation}
@@ -51,11 +51,11 @@
 \end{frame}
 
 \begin{frame}
-	Simplify hamiltonian takes form
+	Simplified hamiltonian takes a form
 	\begin{equation}
 		\hat{H} = -t\sum_{\vb*{\delta},\vb{k}}\left(e^{-\imag\vb{k\cdot\vb*{\delta}}}\hat{a}^\dagger_{\vb{k}}\hat{b}_{\vb{k}}  + e^{\imag\vb{k\cdot\vb*{\delta}}}\hat{b}^\dagger_{\vb{k}}\hat{a}_{\vb{k}} \right),
 	\end{equation}
-	which in simpler form is
+	which in a simpler form is written as
 	\begin{equation}
 		\hat{H} = \sum_{\vb{k}} \Psi^\dagger \hat{h}\vb{(k)} \Psi,
 	\end{equation}
@@ -90,11 +90,11 @@
 			\Delta_{\vb{k}}^* & 0
 		\end{pmatrix}
 	\end{equation}
-	is nothing else than matrix representation of hamiltonian with elements
+	is nothing else than a matrix representation of hamiltonian with elements
 	\begin{equation}
 		\Delta_{\vb{k}} = \sum_{\vb*{\delta}} e^{\imag \vb{k}\cdot \vb*{\delta}}.
 	\end{equation}
-	This approach leads to finding dispersion relation in graphene by finding eigenenergies of simplifier hamiltonian.
+	This approach leads to finding a dispersion relation in graphene by finding eigenenergies of a simplified hamiltonian.
 	\begin{gather}
 		\Delta_{\vb{k}} = e^{\imag(\vb{k}\cdot\vb*{\delta_1})} + e^{\imag(\vb{k}\cdot\vb*{\delta_2})} + e^{\imag(\vb{k}\cdot\vb*{\delta_3})}
 		\\
@@ -125,16 +125,16 @@
 	Thus charge carriers propagating across a bipolar junction can perform multiple reflections - as in Fabry-Perot interferometer.
 
 	Density of carriers is usually changed by applying $V_{\text{TG}}$ and $V_{\text{BG}}$ voltages.
-	In calculations those voltages are applied by
+	In calculations those voltages considered by
 	\begin{itemize}
 		\item applying and changing amplitude of potential barrier ($V_{\text{TG}}$),
-		\item changing energy of electron ($V_{\text{BG}}$).
+		\item changing energy of an incident electron ($V_{\text{BG}}$).
 	\end{itemize}
 \end{frame}
 
 
 \begin{frame}
-	Results should be similar to one from instruction:
+	Results should be similar to the one from the instruction:
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.95\textwidth]{../figures/wymagania.png}
@@ -186,9 +186,9 @@
         def nn_hopping(site1, site2):
             x1, y1 = site1.pos
             x2, y2 = site2.pos
-            pereir = -self.B * (y1 + y2) * (x2 - x1) / 2
+            phase = -self.B * (y1 + y2) * (x2 - x1) / 2
 
-            return self.t0 * np.exp(1j * pereir)
+            return self.t0 * np.exp(1j * phase)
     \end{minted}
 \end{frame}
 
@@ -260,12 +260,12 @@
 \end{frame}
 
 \begin{frame}
-    In order to check a range of calculations simple currents has been calculated.
+    In order to check the range of calculations, simple currents have been calculated.
     \begin{figure}
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/currents.pdf}
         \end{center}
-        \caption{Currents in system with changing incident electron energy and potential barier height.}
+        \caption{Currents in the system with changing incident electron energy and potential barier height.}
     \end{figure}
 \end{frame}
 
@@ -274,7 +274,7 @@
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/conductance.png}
         \end{center}
-        \caption{Conductance scan over incident electron energy $E$ and amplitude of potential barrier $V_{np}$.}
+        \caption{Conductance scan over an incident electron energy $E$ and an amplitude of potential barrier $V_{np}$.}
     \end{figure}
 \end{frame}
 
@@ -283,7 +283,7 @@
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/conductance_long_e05_v02.pdf}
         \end{center}
-        \caption{Finer conductance scan over incident electron energy $E$ and amplitude of potential barrier $V_{np}$. Black dashed line has $\frac{\pi}{4}$ slope and has been added as reference.}
+        \caption{Finer conductance scan over an incident electron energy $E$ and an amplitude of potential barrier $V_{np}$. Black dashed line has $\frac{\pi}{4}$ slope and has been added as a reference.}
     \end{figure}
 \end{frame}
 
@@ -293,7 +293,7 @@
         \begin{center}
             \includegraphics[width=0.5\textwidth]{../figures/compare_g.png}
         \end{center}
-        \caption{Figure 1e from \url{10.1103/PhysRevLett.113.116601}. Similarities between plot are clearly visible, however obtained in one project has much lower range}
+        \caption{Figure 1e from \url{10.1103/PhysRevLett.113.116601}. Similarities between plot are clearly visible, however obtained in this project has much lower range.}
     \end{figure}
 \end{frame}
 
@@ -302,7 +302,7 @@
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/conductance_b_field_scan_large.png}
         \end{center}
-        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines has been plotted for better visualisation of transmittance maxima.}
+        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines have been plotted for better visualisation of transmittance maxima.}
     \end{figure}
 \end{frame}
 
@@ -311,7 +311,7 @@
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/conductance_b_field_scan_low.png}
         \end{center}
-        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines has been plotted for better visualisation of transmittance maxima.}
+        \caption{Transmittance scan over external magnetic field $B$ and amplitude of potential barrier $V_{np}$. Incident electron energy has been set to 0.01 eV. For two values lines have been plotted for better visualisation of transmittance maxima.}
     \end{figure}
 \end{frame}
 
@@ -320,7 +320,7 @@
         \begin{center}
             \includegraphics[width=0.7\textwidth]{../figures/currents_changing_b.pdf}
         \end{center}
-        \caption{Currents in system with external magnetic field and changing potential barier height. Incident electron energy is equal to 0.01 eV. Parameters have been chosen in order to obtain maxima and minima of transmittance.}
+        \caption{Currents in the system with external magnetic field and changing potential barier height. Incident electron energy is equal to 0.01 eV. Parameters have been chosen in order to obtain maxima and minima of transmittance.}
     \end{figure}
 \end{frame}
 
